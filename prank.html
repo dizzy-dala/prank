@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Important questions</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8);
+            overflow: hidden;
+            color: white;
+        }
+        .container{
+            width: 500px;
+            max-width: 500px;
+            text-align: center;
+            background: rgba(225, 225, 225, 0.08);
+            padding: 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(225, 225, 225, 0.1);
+        }
+        h1{
+            margin-bottom: 30px;
+            font-size: 2em;
+            color: #facc15;
+        }
+        .button{
+            margin-top: 30px;
+            position: relative;
+            height: 120px;
+        }
+        button{
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: 0.2s;
+            position: absolute;
+            }
+            #yes{
+                left: 30%;
+                background: #22c55e;
+                color: white;
+            }
+            #no{
+                left: 30%;
+                background: #ef4444;
+                color: white;
+            }
+            .message{
+                margin-top: 20px;
+                font-size: 1.1em;
+                color: #cbd5e1;
+                min-height: 30px;
+            }
+            .final{
+                font-size: 2em;
+                color: #facc15;
+                animation: pulse 1s infinite alternate;
+            }
+            @keyframes pulse{
+                from{
+                    transform: scale(1);   
+                }
+                to{
+                    transform: scale(1.1);
+                }
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="question">
+             Are you stupid? 😂
+        </h1>
+        <div class="buttons">
+            <button id="yes">
+                Yes
+            </button>
+
+            <button id="no">
+                No
+            </button>
+        </div>
+        <p class="message" id="message"></p>
+    </div>
+    <script>
+        const questions = [
+            "Do you sleep during movies? 😭",
+            "Have you ever waved at someone who wasn't waving at you? 🤣",
+            "Do you act busy when someone passes near you? 😂",
+            "Do you open the fridge hoping new food appears? 💀",
+            "Would you survive a zombie attack for 5 minutes? 😭",
+            "Are you secretly weird? 👀",
+            "Do you reply 'LOL' without laughing? 😂",
+            "Have you ever forgotten why you entered a room? 🤣",
+            "Are you the drama in your friend group? 😭",
+            "Are you sure? 🤔",
+            "Think again! 😜",
+            "Don't be shy, click yes! 😁",
+            "It's okay to admit it! 😂",
+            "Everyone has their moments! 😆"
+        ];
+        let current = 0;
+        const question = document.getElementById("question");
+        const yesBtn = document.getElementById("yes");
+        const noBtn = document.getElementById("no");
+        const message = document.getElementById("message");
+
+        // ENTER FULLSCREEN
+        document.addEventListener("click", () => {
+            if(document.documentElement.requestFullscreen){
+                document.documentElement.requestFullscreen();
+            }
+        },{once: true});
+
+        // MOVE YES BUTTON
+        function moveButton(){
+            const x = Math.random() * 300;
+            const y = Math.random() * 120;
+
+            yesBtn.style.left = x + "px";
+            yesBtn.style.top = y + "px";
+
+        }
+        yesBtn.addEventListener("mouseover", () => {
+            if (window.innerwidth > 768){
+                moveButton();
+            }
+        });
+        // MOBILE TOUCH RUNAWAY BUTTON
+        yesBtn.addEventListener("touchstart", () => {
+            moveButton();
+        });
+        // NO BUTTON CLICK
+        noBtn.addEventListener("click", () => {
+            // PHONE BIBRATION
+            if(navigator.vibrate){
+                navigator.vibrate(300);
+            }
+            // RANDOM FUNNY MESSAGE
+            const funnyMessages = [
+                "Think carefully 😭",
+                "That answer looks suspicious 👀",
+                "Hmmmm 🤨",
+                "Be honest 😂",
+                "Liar detected 🚨",
+                "Don't worry, we all have our moments! 😄",
+                "It's just a prank! 😂",
+                "Everyone has their silly side! 😆",
+                "You're not alone, we all do weird things! 🤣",
+                "Embrace your quirks! 😜",
+                "Life's too short to be serious! 😁",
+                "You're doing great, keep being you! 🌟"
+            ];
+            message.innerHTML = 
+                funnyMessages[
+                    Math.floor(Math.random()*funnyMessages.length)
+                ];
+                // SHAKE SCREEN
+                document.body.style.transform = "translate(10px)";
+                setTimeout(() => {
+                    document.body.style.transform = "translate(-10px)";
+                }, 100);
+                setTimeout(() => {
+                    document.body.style.transform = "translate(0px)";
+                }, 200);
+                })
+                // NEXT QUESTION
+                setTimeout(() => {
+                    current++;
+                    if(current < questions.length){
+                        question.innerHTML = questions[current];
+                        message.innerHTML = "";
+                        // RANDOMIZE BUTTON POSITION
+                        yesBtn.style.left = 
+                            Math.random() * 50 + "%";
+                        noBtn.style.right = 
+                            Math.random() * 50 + "%";
+                    }
+                    else{
+                        // FINAL TROLL SCREEN
+                        DOCUMENT.body.innerHTML = `
+                            <div style="display: flex; height: 100vh; justify-content: center; align-items: center; flex-direction: column; background: black; color: red; font-family: Arial, text-align: center;">
+                                <h1 style="
+                                font-size: 4rem;
+                                animation: pulse 1s infinite alternate;">
+                                 🚨 FBI DETECTED 🚨
+                            </h1>
+                            <p style="
+                            margin-top: 20px;
+                            font-size: 1.5rem;
+                            color: white;
+                            ">
+                            Just kidding! You're safe! 😁
+                            <br><br>
+                            Thanks for playing! 😂
+                            <br><br>
+                            You have been exposed!😜
+                            </p>
+                            <button onclick="location.reload()" style="
+                            margin-top: 30px;
+                            padding: 15px 30px;
+                            border: none;
+                            border-radius: 50px;
+                            font-size: 1rem;
+                            background; red;
+                            color: white;
+                            cursor: pointer;
+                            ">
+                             Restart Prank 😈
+                            </button>
+                        </div>
+                        ';
+                        // VIBRATE HARDER
+                        if(navigator.vibrate){
+                            navigator.vibrate([300, 100, 300, 200, 500]);
+                        }
+                    }
+                },1500);
+
+                    });
+                    // IF THEY CLICK YES
+
+yesBtn.addEventListener("click", () => {
+
+  message.innerHTML =
+    "AYOOOO YOU ADMITTED IT 😭😂";
+
+  // SPAM POPUPS
+
+  for(let i=0;i<5;i++){
+
+    setTimeout(() => {
+
+      alert("EXPOSED 😂");
+
+    },i*300);
+
+  }
+
+});
+
+        
+    </script>
+</body>
+</html>
